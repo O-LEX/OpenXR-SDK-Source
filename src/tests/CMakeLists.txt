@@ -17,6 +17,7 @@
 add_subdirectory(c_compile_test)
 add_subdirectory(hello_xr)
 add_subdirectory(list_json)
+add_subdirectory(garu)
 
 if(NOT ANDROID)
     add_subdirectory(list)
