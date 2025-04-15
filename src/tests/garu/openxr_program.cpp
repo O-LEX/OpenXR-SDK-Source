@@ -6,7 +6,6 @@
 #include "pch.h"
 #include "common.h"
 #include "options.h"
-#include "platformdata.h"
 #include "platformplugin.h"
 #include "graphicsplugin.h"
 #include "openxr_program.h"
@@ -192,10 +191,10 @@ struct OpenXrProgram : IOpenXrProgram {
         createInfo.enabledExtensionCount = (uint32_t)extensions.size();
         createInfo.enabledExtensionNames = extensions.data();
 
-        strcpy(createInfo.applicationInfo.applicationName, "HelloXR");
+        strcpy(createInfo.applicationInfo.applicationName, "garu");
 
-        // Current version is 1.1.x, but hello_xr only requires 1.0.x
-        createInfo.applicationInfo.apiVersion = XR_API_VERSION_1_0;
+        // Current version is 1.1.x, but garu?
+        createInfo.applicationInfo.apiVersion = XR_CURRENT_API_VERSION;
 
         CHECK_XRCMD(xrCreateInstance(&createInfo, &m_instance));
     }

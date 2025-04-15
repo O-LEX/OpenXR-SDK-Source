@@ -5,7 +5,6 @@
 #include "pch.h"
 #include "common.h"
 #include "options.h"
-#include "platformdata.h"
 #include "platformplugin.h"
 #include "graphicsplugin.h"
 #include "openxr_program.h"
@@ -82,8 +81,6 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
-        std::shared_ptr<PlatformData> data = std::make_shared<PlatformData>();
-
         // Spawn a thread to wait for a keypress
         static bool quitKeyPressed = false;
         auto exitPollingThread = std::thread{[] {
@@ -96,7 +93,7 @@ int main(int argc, char* argv[]) {
         bool requestRestart = false;
         do {
             // Create platform-specific implementation.
-            std::shared_ptr<IPlatformPlugin> platformPlugin = CreatePlatformPlugin(options, data);
+            std::shared_ptr<IPlatformPlugin> platformPlugin = CreatePlatformPlugin(options);
 
             // Create graphics API implementation.
             std::shared_ptr<IGraphicsPlugin> graphicsPlugin = CreateGraphicsPlugin(options, platformPlugin);

@@ -5,7 +5,6 @@
 #include <vector>
 
 struct Options;
-struct PlatformData;
 
 // Platform-specific plugin interface
 struct IPlatformPlugin {
@@ -17,9 +16,7 @@ struct IPlatformPlugin {
 };
 
 // Linux-specific implementation (in-header)
-inline std::shared_ptr<IPlatformPlugin> CreatePlatformPlugin(const std::shared_ptr<Options>& options,
-                                                             const std::shared_ptr<PlatformData>& data) {
-    (void)data;
+inline std::shared_ptr<IPlatformPlugin> CreatePlatformPlugin(const std::shared_ptr<Options>& options) {
 
     struct PosixPlatformPlugin : public IPlatformPlugin {
         PosixPlatformPlugin(const std::shared_ptr<Options>& /*unused*/) {}

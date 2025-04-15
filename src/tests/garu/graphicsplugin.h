@@ -4,6 +4,15 @@
 
 #pragma once
 
+#include <utility>
+
+#include "pch.h"
+#include "common.h"
+#include "options.h"
+
+struct IPlatformPlugin;
+struct Options;
+
 struct Cube {
     XrPosef Pose;
     XrVector3f Scale;
@@ -44,6 +53,8 @@ struct IGraphicsPlugin {
     virtual void UpdateOptions(const std::shared_ptr<struct Options>& options) = 0;
 };
 
-// Create a graphics plugin for the graphics API specified in the options.
-std::shared_ptr<IGraphicsPlugin> CreateGraphicsPlugin(const std::shared_ptr<struct Options>& options,
-                                                      std::shared_ptr<struct IPlatformPlugin> platformPlugin);
+std::shared_ptr<IGraphicsPlugin> CreateGraphicsPlugin_OpenGL(const std::shared_ptr<Options>& options, std::shared_ptr<IPlatformPlugin> platformPlugin);
+
+inline std::shared_ptr<IGraphicsPlugin> CreateGraphicsPlugin(const std::shared_ptr<Options>& options, std::shared_ptr<IPlatformPlugin> platformPlugin) {
+    return CreateGraphicsPlugin_OpenGL(options, std::move(platformPlugin));
+}
