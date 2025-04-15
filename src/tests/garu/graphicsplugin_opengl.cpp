@@ -120,10 +120,7 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
             THROW("Runtime does not support desired Graphics API and/or version");
         }
 
-#ifdef XR_USE_PLATFORM_WIN32
-        m_graphicsBinding.hDC = window.context.hDC;
-        m_graphicsBinding.hGLRC = window.context.hGLRC;
-#elif defined(XR_USE_PLATFORM_XLIB)
+#if defined(XR_USE_PLATFORM_XLIB)
         m_graphicsBinding.xDisplay = window.context.xDisplay;
         m_graphicsBinding.visualid = window.context.visualid;
         m_graphicsBinding.glxFBConfig = window.context.glxFBConfig;
@@ -141,8 +138,6 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
         // TODO: Just need something other than NULL here for now (for validation).  Eventually need
         //       to correctly put in a valid pointer to an wl_display
         m_graphicsBinding.display = reinterpret_cast<wl_display*>(0xFFFFFFFF);
-#elif defined(XR_USE_PLATFORM_MACOS)
-#error OpenGL bindings for Mac have not been implemented
 #else
 #error Platform not supported
 #endif
@@ -366,16 +361,12 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
     void UpdateOptions(const std::shared_ptr<Options>& options) override { m_clearColor = options->GetBackgroundClearColor(); }
 
    private:
-#ifdef XR_USE_PLATFORM_WIN32
-    XrGraphicsBindingOpenGLWin32KHR m_graphicsBinding{XR_TYPE_GRAPHICS_BINDING_OPENGL_WIN32_KHR};
-#elif defined(XR_USE_PLATFORM_XLIB)
+#if defined(XR_USE_PLATFORM_XLIB)
     XrGraphicsBindingOpenGLXlibKHR m_graphicsBinding{XR_TYPE_GRAPHICS_BINDING_OPENGL_XLIB_KHR};
 #elif defined(XR_USE_PLATFORM_XCB)
     XrGraphicsBindingOpenGLXcbKHR m_graphicsBinding{XR_TYPE_GRAPHICS_BINDING_OPENGL_XCB_KHR};
 #elif defined(XR_USE_PLATFORM_WAYLAND)
     XrGraphicsBindingOpenGLWaylandKHR m_graphicsBinding{XR_TYPE_GRAPHICS_BINDING_OPENGL_WAYLAND_KHR};
-#elif defined(XR_USE_PLATFORM_MACOS)
-#error OpenGL bindings for Mac have not been implemented
 #else
 #error Platform not supported
 #endif
